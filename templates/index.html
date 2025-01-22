@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Music Player</title>
+    <style>
+        /* Color Scheme */
+        :root {
+            --blue-light: #a3c9f1;
+            --blue-dark: #005f73;
+            --white: #ffffff;
+            --accent-color: #0096c7;
+        }
+
+        /* Background Images */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 28%;
+            height: 100%;
+            background: url('/static/picture/rollpiano.jpeg') no-repeat center center;
+            background-size: cover;
+            z-index: -1;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 28%;
+            height: 100%;
+            background: url('/static/picture/techno.jpeg') no-repeat center center;
+            background-size: cover;
+            z-index: -1;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--white);
+            color: var(--blue-dark);
+            margin: 0;
+            padding: 0;
+            padding-bottom: 210px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: var(--blue-dark);
+            color: var(--white);
+        }
+
+        header img {
+            max-width: 75px;
+            height: auto;
+        }
+
+        h1 {
+            color: var(--white);
+            margin: 0;
+            flex-grow: 1;
+            text-align: center;
+            font-size: 2.3rem;
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: var(--white);
+            font-size: 1rem;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            background-color: #0077b6;
+        }
+
+        audio {
+            display: block;
+            margin: 20px auto;
+            border-radius: 5px;
+        }
+
+        footer {
+            background-color: var(--blue-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 0.9rem;
+            box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="/static/picture/logo.jpeg" alt="Quantum Music Player Logo">
+        <h1>Quantum Music Player</h1>
+        <img src="/static/picture/logo.jpeg" alt="Quantum Music Player Logo">
+    </header>
+
+    <button onclick="startProgram()">Start Program</button>
+    <button onclick="playMusic()">Play Music</button>
+
+    <audio id="player" controls></audio>
+    <div id="partition-container" style="text-align: center; margin: 20px 0;"></div>
+
+    <footer>
+        <p>Quantum Music Player - Écoutez, apprenez et explorez. Créé avec passion pour les mélomanes du monde entier.</p>
+        <p>&copy; 2025 Quantum Music Inc. Tous droits réservés.</p>
+    </footer>
+
+    <script type="text/javascript">
+        function startProgram() {
+            fetch('/start')
+                .then(response => response.text())
+                .then(message => {
+                    console.log(message);
+                    showPartition(); // Recharge la partition
+                });
+        }
+
+        function showPartition() {
+            var container = document.getElementById('partition-container');
+            container.innerHTML = ''; // Efface le contenu précédent
+
+            var img = document.createElement('img');
+            img.src = '/static/picture/quantum_music_harmonic_sheet_1.png?timestamp=' + new Date().getTime(); // URL unique
+            img.alt = 'Partition musicale';
+            img.style.maxWidth = '80%';
+            img.style.borderRadius = '10px';
+            img.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+            container.appendChild(img);
+        }
+
+        function playMusic() {
+            var player = document.getElementById('player');
+            player.src = '/music?timestamp=' + new Date().getTime(); // Force le chargement du nouveau fichier MP3
+            player.play();
+
+            // Recharger l'image de la partition
+            var img = document.querySelector('#partition-container img');
+            if (img) {
+                img.src = '/static/picture/quantum_music_harmonic_sheet_1.png?timestamp=' + new Date().getTime();
+            } else {
+                showPartition();
+            }
+        }
+    </script>
+</body>
+</html>
