@@ -50,7 +50,7 @@ def sheet():
 def image():
     # Chemin du fichier image généré depuis le PDF
     image_folder = 'static/picture'
-    image_path = os.path.join(image_folder, 'quantum_music_harmonic_sheet_1.png')  # Exemple avec la première image
+    image_path = os.path.join(image_folder, 'quantum_music_harmonic_sheet_1.png')
     if os.path.exists(image_path):
         return send_file(image_path, as_attachment=False, mimetype='image/png')
     else:
